@@ -12,7 +12,7 @@ import os
 class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
     def __init__(self):
         """
-        This Task Env is designed for having the TurtleBot3 in a spA  WHER?
+        This Task Env is designed for having the TurtleBot3 in a custom environment (with a custom task)
         closed room with columns.
         It will learn how to move around without crashing.
         """
@@ -29,12 +29,12 @@ class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
 
         # Load Params from the desired Yaml file
         LoadYamlFileParamsTest(rospackage_name="openai_ros",
-                               rel_path_from_package_to_file="src/openai_ros/task_envs/turtlebot3/config",
+                               rel_path_from_package_to_file="src/openai_ros/task_envs/turtlebot3_custom/config",
                                yaml_file_name="turtlebot3_world.yaml")
 
 
         # Here we will add any init functions prior to starting the MyRobotEnv
-        super(TurtleBot3WorldEnv, self).__init__(ros_ws_abspath)
+        super(TurtleBot3CustomEnv, self).__init__(ros_ws_abspath)
 
         # Only variable needed to be set here
         number_actions = rospy.get_param('/turtlebot3/n_actions')
@@ -117,7 +117,7 @@ class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
 
     def _set_action(self, action):
         """
-        This set action will Set the linear and angular speed of the turtlebot2
+        This set action will Set the linear and angular speed of the turtlebot3
         based on the action number given.
         :param action: The action integer that set s what movement to do next.
         """
@@ -137,7 +137,7 @@ class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
             angular_speed = -1*self.angular_speed
             self.last_action = "TURN_RIGHT"
 
-        # We tell TurtleBot2 the linear and angular speed to set to execute
+        # We tell TurtleBot3 the linear and angular speed to set to execute
         self.move_base(linear_speed, angular_speed, epsilon=0.05, update_rate=10)
 
         rospy.logdebug("END Set Action ==>"+str(action))
@@ -146,7 +146,7 @@ class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
         """
         Here we define what sensor data defines our robots observations
         To know which Variables we have acces to, we need to read the
-        TurtleBot2Env API DOCS
+        TurtleBot3Env API DOCS
         :return:
         """
         rospy.logdebug("Start Get Observation ==>")
@@ -165,18 +165,18 @@ class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
     def _is_done(self, observations):
 
         if self._episode_done:
-            rospy.logerr("TurtleBot2 is Too Close to wall==>")
+            rospy.logerr("TurtleBot3 is Too Close to wall==>")
         else:
-            rospy.logwarn("TurtleBot2 is NOT close to a wall ==>")
+            rospy.logwarn("TurtleBot3 is NOT close to a wall ==>")
 
         # Now we check if it has crashed based on the imu
         imu_data = self.get_imu()
         linear_acceleration_magnitude = self.get_vector_magnitude(imu_data.linear_acceleration)
         if linear_acceleration_magnitude > self.max_linear_aceleration:
-            rospy.logerr("TurtleBot2 Crashed==>"+str(linear_acceleration_magnitude)+">"+str(self.max_linear_aceleration))
+            rospy.logerr("TurtleBot3 Crashed==>"+str(linear_acceleration_magnitude)+">"+str(self.max_linear_aceleration))
             self._episode_done = True
         else:
-            rospy.logerr("DIDNT crash TurtleBot2 ==>"+str(linear_acceleration_magnitude)+">"+str(self.max_linear_aceleration))
+            rospy.logerr("DIDNT crash TurtleBot3 ==>"+str(linear_acceleration_magnitude)+">"+str(self.max_linear_aceleration))
 
 
         return self._episode_done

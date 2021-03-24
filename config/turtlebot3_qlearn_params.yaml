@@ -1,5 +1,5 @@
 turtlebot3: #namespace
-    task_and_robot_environment_name: 'TurtleBot3World-v0'
+    task_and_robot_environment_name: 'TurtleBot3Custom-v0'
     ros_ws_abspath: "/home/jduchniewicz/Projects/catkin_ws"
     running_step: 0.04 # amount of time the control will be executed
     pos_step: 0.016     # increment in position for each command
