@@ -9,7 +9,7 @@ from openai_ros.openai_ros_common import ROSLauncher
 import os
 
 
-class TurtleBotCustomEnv(turtlebot3_env.TurtleBot3Env):
+class TurtleBot3CustomEnv(turtlebot3_env.TurtleBot3Env):
     def __init__(self):
         """
         This Task Env is designed for having the TurtleBot3 in a custom environment (with a custom task)
