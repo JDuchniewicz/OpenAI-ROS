@@ -26,11 +26,10 @@ if __name__ == '__main__':
 
     # Set the logging system
     rospack = rospkg.RosPack()
-    pkg_path = rospack.get_path('my_turtlebot3_openai_example')
+    pkg_path = rospack.get_path('openai_turtlebot3')
     outdir = pkg_path + '/training_results'
     env = wrappers.Monitor(env, outdir, force=True)
     rospy.loginfo("Monitor Wrapper started")
-
     last_time_steps = numpy.ndarray(0)
 
     # Loads parameters from the ROS param server
