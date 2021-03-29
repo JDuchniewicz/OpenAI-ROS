@@ -14,17 +14,6 @@ class SARSA:
     def getQ(self, state, action):
         return self.q.get((state, action), 0.0)
 
-    def learn(self, state, action, reward, value):
-        '''
-        Q-learning:
-            Q(s, a) += alpha * (reward(s,a) + max(Q(s') - Q(s,a))
-        '''
-        oldv = self.q.get((state, action), None)
-        if oldv is None:
-            self.q[(state, action)] = reward
-        else:
-            self.q[(state, action)] = oldv + self.alpha * (value - oldv)
-
     def chooseAction(self, state, return_q=False):
         q = [self.getQ(state, a) for a in self.actions]
         maxQ = max(q)
@@ -49,6 +38,14 @@ class SARSA:
             return action, q
         return action
 
-    def learn(self, state1, action1, reward, state2):
-        maxqnew = max([self.getQ(state2, a) for a in self.actions])
-        self.learnQ(state1, action1, reward, reward + self.gamma*maxqnew)
+    def learn(self, state1, action1, reward, state2, action2):
+        '''
+        SARSA:
+            Q(s, a) = Q(s, a) +  alpha * (reward(s,a) + gamma * Q(s', a') - Q(s,a))
+        '''
+        oldv = self.q.get((state1, action1), None)
+        newv = self.getQ(state2, action2)
+        if oldv is None:
+            self.q[(state1, action1)] = self.alpha * reward
+        else:
+            self.q[(state1, action1)] = oldv + self.alpha * (reward + self.gamma * newv - oldv)
