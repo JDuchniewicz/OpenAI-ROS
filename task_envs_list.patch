@@ -1,0 +1,12 @@
+185,195d184
+<     elif task_env == 'TurtleBot3Custom-v0':
+< 
+<         register(
+<             id=task_env,
+<             entry_point='openai_ros.task_envs.turtlebot3_custom.turtlebot3_custom:TurtleBot3CustomEnv',
+<             max_episode_steps=max_episode_steps,
+<         )
+< 
+<         # import our training environment
+<         from openai_ros.task_envs.turtlebot3_custom import turtlebot3_custom
+< 
