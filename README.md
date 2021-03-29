@@ -50,18 +50,25 @@ Substitute the `openai_turtlebot3` string with `OpenAI-ROS` or whatever you chos
 #### Tweaking
 
 **GUI ON/OFF** - change the parameter `gui` to either `true` or `false`
+
 **Adding actions** - modify the `task_env/turtlebot3_custom.py` adding new actions to `_set_action` method
+
 **Changing the map** - modify the launch files, especially `start_world.launch`
+
 **Changing the robot** - not covered here, check [here](https://wiki.ros.org/openai_ros/TurtleBot2%20with%20openai_ros)
+
 **Adding own training algorithm** - add own algorithm and integrate it with/create a new training script
 
 
 #### Running
 After building the project and sourcing new env variables changes with `source devel/setup.bash` run:
+
 `roslaunch <name_of_this_project> <training_script>`
+
 where `training_script` is either `start_training_v2.launch` or `start_sarsa_training.launch`.
 
 #### Plotting results
 In the `utils` directory there is a plotting script, run it and observe the results. The files with results are saved as JSON strings in the `training_results` directory
-`python results.py -f <name_of_json_with_episodes>
+
+`python results.py -f <name_of_json_with_episodes>`
 
